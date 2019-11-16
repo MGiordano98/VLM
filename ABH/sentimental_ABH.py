@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 analyser = SentimentIntensityAnalyzer()
 
-tweets  = pd.read_csv('NutellaBiscuits/tweets_nutella_biscuits.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+tweets  = pd.read_csv('ABH/tweets_ABH.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
 
 tweets = tweets.drop_duplicates(subset='text', keep='first')
 
