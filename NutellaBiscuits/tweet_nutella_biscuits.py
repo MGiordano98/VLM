@@ -1,6 +1,7 @@
 import tweepy
 import csv
 import pandas as pd
+import unicodedata
 
 ####input your credentials here
 consumer_key= "DvIJROlZmX32RctFrpQSRlHYj"
@@ -14,20 +15,20 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth,wait_on_rate_limit=True)
 #####United Airlines
 # Open/Create a file to append data
-csvFile = open('ua.csv', 'a')
+csvFile = open('NutellaBiscuits/tweets_nutella_biscuits.csv', 'a', encoding="UTF-8")
 
 #Use csv Writer
 csvWriter = csv.writer(csvFile)
 
-
+hashtag="#NutellaBiscuits"
+since = "2019-11-07"
+until = "2019-11-15"
 
 for tweet in tweepy.Cursor(api.search,
-                           q="#ABH",
-                           count=1000,
-                           lang="en",
-                           since = "2019-11-10",
-                           until = "2019-11-14").items():
-    csvWriter.writerow([ tweet.user.screen_name, tweet.text.encode('utf-8'),tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location.encode('utf-8')])
+                            q=hashtag,
+                            since=since,
+                            until=until).items():
+    csvWriter.writerow([ tweet.user.screen_name, tweet.text,tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location])
 #Variables that contains the user credentials to access Twitter API 
 
 
