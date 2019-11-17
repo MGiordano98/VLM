@@ -21,8 +21,10 @@ csvFile = open('NutellaBiscuits/tweets_nutella_biscuits.csv', 'a', encoding="UTF
 csvWriter = csv.writer(csvFile)
 
 hashtag="#NutellaBiscuits"
-since = "2019-11-07"
-until = "2019-11-16"
+since = "2019-11-16"
+until = "2019-11-17"
+
+#Se voglio prendere i tweet di un giorno, esempio del 2019-11-16, devo mettere since="2019-11-16" e until del giorno dopo quindi="2019-11-17"
 
 for tweet in tweepy.Cursor(api.search,
                             q=hashtag,
