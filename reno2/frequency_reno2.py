@@ -2,10 +2,10 @@ from collections import Counter
 import pandas as pd
 import nltk
 
-tweets  = pd.read_csv('ABH/tweets_ABH.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+tweets  = pd.read_csv('reno2/tweets_reno2.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
 
 tweets = tweets.drop_duplicates(subset='text', keep='first')
- 
+
 stopwords_it = nltk.corpus.stopwords.words('italian')
 stopwords_en = nltk.corpus.stopwords.words('english')
 stopwords = stopwords_it + stopwords_en
@@ -22,4 +22,4 @@ words = (tweets["text"]
 # generate DF out of Counter
 rslt = pd.DataFrame(Counter(words).most_common(10),
                     columns=['Word', 'Frequency']).set_index('Word')
-rslt
+rslt.head(5)

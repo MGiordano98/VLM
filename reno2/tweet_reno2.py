@@ -15,12 +15,16 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth,wait_on_rate_limit=True)
 #####United Airlines
 # Open/Create a file to append data
-csvFile = open('ABH/tweets_ABH.csv', 'a', encoding="UTF-8")
+csvFile = open('reno2/tweets_reno2.csv', 'a', encoding="UTF-8")
 
 #Use csv Writer
 csvWriter = csv.writer(csvFile)
 
-hashtag="#ABH"
+hashtag="#reno2"
+since = "2019-11-16"
+until = "2019-11-17"
+
+#Se voglio prendere i tweet di un giorno, esempio del 2019-11-16, devo mettere since="2019-11-16" e until del giorno dopo quindi="2019-11-17"
 
 for tweet in tweepy.Cursor(api.search,
                             q=hashtag).items():

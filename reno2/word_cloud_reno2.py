@@ -5,7 +5,7 @@ import nltk
 from nltk.corpus import stopwords
 
 
-tweets  = pd.read_csv('ABH/tweets_ABH.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+tweets  = pd.read_csv('reno2/tweets_reno2.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
 
 tweets = tweets.drop_duplicates(subset='text', keep='first')
 
@@ -20,6 +20,7 @@ wordss = (tweets["text"]
            .str.cat(sep=' ')
            .replace('rt',' ')
            .replace('https',' ')
+           .replace('tco',' ')
            .split()
 )
 
