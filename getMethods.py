@@ -1,27 +1,81 @@
 import pandas as pd
 from collections import Counter
+import csv
+
+
+hashtags=[]
+hashtags.append("#NutellaBisciuts")
+hashtags.append("#ABH")
+hashtags.append('#HuaweiMateX')
+hashtags.append('#MiNote10')
+hashtags.append('#realme5pro')
+hashtags.append('#MotoG8Plus')
+hashtags.append('#PokemonSwordShield')
+hashtags.append('#StarWarsJediFallenOrder')
+hashtags.append('#DeathStrading')
+hashtags.append('#FootballManager2020')
+hashtags.append('#DragonBallZKakarot')
+hashtags.append('#OPPOReno2')
+hashtags.append('#RedmiNote8T')
+
+csvs={}
+csvWriters={}
+tweets={}
+summary={}
+texts={}
+sizes={}
+words={}
 
 def getHashtags():
-    hashtags=[]
-    hashtags.append("#NutellaBisciuts")
-    hashtags.append("#ABH")
-    hashtags.append('#HuaweiMateX')
-    hashtags.append('#MiNote10')
-    hashtags.append('#realme5pro')
-    hashtags.append('#MotoG8Plus')
     return hashtags
+
+def getCsvFile():
+    for i,val in enumerate(hashtags):
+        csvs[val] = open('CSV/'+val+'.csv', 'a', encoding="UTF-8")
+    return csvs
+
+def getWriters():
+    for i,val in enumerate(hashtags):
+        csvWriters[val] = csv.writer(csvs[val])
+    return csvWriters
+
+
 
 
 def getTweets():
-    tweets={}
-    tweets["#NutellaBisciuts"] = pd.read_csv('CSV/nutella_biscuits.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
-    tweets["#ABH"]  = pd.read_csv('CSV/ABH.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
-    tweets["#HuaweiMateX"]  = pd.read_csv('CSV/HuaweiMateX.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
-    tweets["#MiNote10"]  = pd.read_csv('CSV/MiNote10.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
-    tweets["#realme5pro"]  = pd.read_csv('CSV/realme5pro.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
-    tweets["#MotoG8Plus"]  = pd.read_csv('CSV/MotoG8Plus.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+    for i,val in enumerate(hashtags):
+        tweets[val] = pd.read_csv('CSV/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     return tweets
 
 
 def getRslt(x):
     return pd.DataFrame(Counter(x).most_common(10),columns=['Word', 'Frequency']).set_index('Word')
+
+def getSummary():
+    for i,val in enumerate(hashtags):
+        summary[val] = {"positive":0,"neutral":0,"negative":0}
+    return summary
+
+def getOnlyText(tweets):
+    for i,val in enumerate(hashtags):
+        texts[val] = tweets[val]["text"]
+    return texts
+
+def getSizes(summary):
+    for i,val in enumerate(hashtags):
+        sizes[val] = [summary[val]["positive"],summary[val]["neutral"],summary[val]["negative"]]
+    return sizes
+
+
+def getWords(tweets,RE_stopwords):
+    for i,val in enumerate(hashtags):
+        words[val]= (tweets[val]["text"]
+           .str.lower()
+           .replace([r'\|',r'\&',r'\-',r'\.',r'\,',r'\'', RE_stopwords], [' ', '','','','','',''], regex=True)
+           .str.cat(sep=' ')
+           .replace('rt',' ')
+           .replace('https',' ')           
+           .replace('tco',' ')
+           .split()
+            )
+    return words
