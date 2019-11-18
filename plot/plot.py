@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load credentials from json file
-with open("CartellaDiVittorio/twitter_credentials.json", "r") as file:
+with open("CatchTweets/twitter_credentials.json", "r") as file:
     creds = json.load(file)
 
 # Instantiate an object
