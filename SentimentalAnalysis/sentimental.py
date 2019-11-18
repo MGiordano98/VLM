@@ -7,15 +7,22 @@ analyser = SentimentIntensityAnalyzer()
 
 tweet_nutella_biscuits  = pd.read_csv('CSV/nutella_biscuits.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
 tweet_ABH  = pd.read_csv('CSV/ABH.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+tweet_MiNote10  = pd.read_csv('CSV/MiNote10.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+
 
 tweet_nutella_biscuits = tweet_nutella_biscuits.drop_duplicates(subset='text', keep='first')
 tweet_ABH = tweet_ABH.drop_duplicates(subset='text', keep='first')
+tweet_MiNote10 = tweet_MiNote10.drop_duplicates(subset='text', keep='first')
+
+
 
 summary_nutella_biscuits = {"positive":0,"neutral":0,"negative":0}
 summary_ABH = {"positive":0,"neutral":0,"negative":0}
+summary_MiNote10 = {"positive":0,"neutral":0,"negative":0}
 
 tweets_nutella_biscuits = tweet_nutella_biscuits["text"]
 tweets_ABH = tweet_ABH["text"]
+tweets_MiNote10 = tweet_MiNote10["text"]
 
 for x in tweets_nutella_biscuits: 
     ss = analyser.polarity_scores(x)
@@ -38,12 +45,24 @@ for x in tweets_ABH:
         summary_ABH["negative"] +=1
 print(summary_ABH)
 
+for x in tweets_MiNote10: 
+    ss = analyser.polarity_scores(x)
+    if ss["compound"] == 0.0: 
+        summary_MiNote10["neutral"] +=1
+    elif ss["compound"] > 0.0:
+        summary_MiNote10["positive"] +=1
+    else:
+        summary_MiNote10["negative"] +=1
+print(summary_MiNote10)
+
 labels = 'Positive', 'Neutral', 'Negative'
 colors = ['yellowgreen','gold','lightcoral']
 
 
 sizes_nutella_biscuits = [summary_nutella_biscuits["positive"],summary_nutella_biscuits["neutral"],summary_nutella_biscuits["negative"]]
 sizes_ABH = [summary_ABH["positive"],summary_ABH["neutral"],summary_ABH["negative"]]
+sizes_MiNote10 = [summary_MiNote10["positive"],summary_MiNote10["neutral"],summary_MiNote10["negative"]]
+
 explode = (0.1, 0, 0)  # explode 1st slice
 # Plot
 plt.pie(sizes_nutella_biscuits, explode=explode, labels=labels, colors=colors,autopct='%1.1f%%', shadow=True, startangle=140)
@@ -51,5 +70,9 @@ plt.axis('equal')
 plt.show()
 
 plt.pie(sizes_ABH, explode=explode, labels=labels, colors=colors,autopct='%1.1f%%', shadow=True, startangle=140)
+plt.axis('equal')
+plt.show()
+
+plt.pie(sizes_MiNote10, explode=explode, labels=labels, colors=colors,autopct='%1.1f%%', shadow=True, startangle=140)
 plt.axis('equal')
 plt.show()
