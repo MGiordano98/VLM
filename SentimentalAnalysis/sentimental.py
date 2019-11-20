@@ -22,10 +22,10 @@ for key,value in tweets.items():
             summary[key]["positive"] +=1
         else:
             summary[key]["negative"] +=1
-    print(len(value["date"]))
-    print(value["date"][len(value["date"])])
+    value.sort_index(by='date', inplace=True, ascending=True)
+    df = value.reset_index(drop=True)
+    dates[key] = "Start ="+df["date"][0] + "   to ="+df["date"][len(df["date"])-1]
 
-print(dates)
 
 labels = ['Positive', 'Neutral', 'Negative']
 colors = ['yellowgreen','gold','lightcoral']
@@ -37,6 +37,6 @@ explode = (0.1, 0, 0)  # explode 1st slice
 for i,val in enumerate(hashtags):
     plt.pie(sizes[val], explode=explode, labels=labels, colors=colors,autopct='%1.1f%%', shadow=True, startangle=140)
     plt.axis('equal')
-    plt.title(val)
+    plt.title(val + "  " + dates[val])
     plt.legend(sizes[val])
     plt.show()
