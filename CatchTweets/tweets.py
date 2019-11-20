@@ -22,10 +22,11 @@ csvs = getMethods.getCsvFile()
 #Use csv Writer
 csvWriters = getMethods.getWriters()
 
-since = "2019-11-19"
-until = "2019-11-20"
+since = "2019-11-20"
+until = "2019-11-21"
 #Se voglio prendere i tweet di un giorno, esempio del 2019-11-16, devo mettere since="2019-11-16" e until del giorno dopo quindi="2019-11-17"
 #il giorno 20/11/19 devo farlo partire dal 2019-11-19 al 2019-11-20
+#Per i pokèmon until="2019-11-20"
 
 for i,val in enumerate(hashtags):
     for tweet in tweepy.Cursor(api.search,

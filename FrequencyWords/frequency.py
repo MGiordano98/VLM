@@ -10,13 +10,13 @@ tweets= getMethods.getTweets()
 
 words = []
 
-
-for i,val in enumerate(hashtags):
+for key,value in tweets.items():
     x = []
-    for t in tweets[val]["text"]:
-        for i in t.split():
-            if i.startswith('@'):
-                x.append(i)
+    for text in value["text"]:
+        if 'RT @' in text:
+            t = text.split()
+            if t[1].endswith(':'):
+                x.append(t[1])
     wow = getMethods.getRslt(x)
     words.append(wow)
 
