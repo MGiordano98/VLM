@@ -8,11 +8,6 @@ hashtags = getMethods.getHashtags()
 
 tweets= getMethods.getTweets()
 
-for i,val in enumerate(hashtags):
-    tweets[val] = tweets[val].drop_duplicates(subset='text', keep='first')
-
-
-
 words = []
 
 

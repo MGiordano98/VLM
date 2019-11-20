@@ -9,10 +9,6 @@ hashtags = getMethods.getHashtags()
 
 tweets = getMethods.getTweets()
 
-for i,val in enumerate(hashtags):
-    tweets[val] = tweets[val].drop_duplicates(subset='text', keep='first')
-
-
 summary = getMethods.getSummary()
 
 texts = getMethods.getOnlyText(tweets)
@@ -37,6 +33,8 @@ explode = (0.1, 0, 0)  # explode 1st slice
 # Plot
 for i,val in enumerate(hashtags):
     print(val)
+    print(summary[val])
+    print("--------------------------")
     plt.pie(sizes[val], explode=explode, labels=labels, colors=colors,autopct='%1.1f%%', shadow=True, startangle=140)
     plt.axis('equal')
     plt.title(val)
