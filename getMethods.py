@@ -4,22 +4,22 @@ import csv
 
 
 hashtags=[]
-hashtags.append("#NutellaBiscuits")
+""" hashtags.append("#NutellaBiscuits")
 hashtags.append("#ABH") 
 hashtags.append('#HuaweiMateX')
 hashtags.append('#MiNote10')
 hashtags.append('#realme5pro')
 hashtags.append('#MotoG8Plus')
-
-#hashtags.append('#PokemonSwordShield')
-
+ """
+hashtags.append('#PokemonSwordShield')
+""" 
 hashtags.append('#StarWarsJediFallenOrder')
 hashtags.append('#DeathStrading')
 hashtags.append('#FootballManager2020')
 hashtags.append('#DragonBallZKakarot')
 hashtags.append('#OPPOReno2')
 hashtags.append('#RedmiNote8T')
-
+ """
 
 csvs={}
 csvWriters={}
@@ -58,11 +58,6 @@ def getSummary():
     for i,val in enumerate(hashtags):
         summary[val] = {"positive":0,"neutral":0,"negative":0}
     return summary
-
-def getOnlyText(tweets):
-    for i,val in enumerate(hashtags):
-        texts[val] = tweets[val]["text"]
-    return texts
 
 def getSizes(summary):
     for i,val in enumerate(hashtags):
