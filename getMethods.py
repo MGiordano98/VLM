@@ -5,7 +5,7 @@ import csv
 
 hashtags=[]
 hashtags.append("#NutellaBiscuits")
-""" hashtags.append("#ABH") 
+hashtags.append("#ABH") 
 hashtags.append('#HuaweiMateX')
 hashtags.append('#MiNote10')
 hashtags.append('#realme5pro')
@@ -18,7 +18,7 @@ hashtags.append('#DeathStrading')
 hashtags.append('#FootballManager2020')
 hashtags.append('#DragonBallZKakarot')
 hashtags.append('#OPPOReno2')
-hashtags.append('#RedmiNote8T')  """
+hashtags.append('#RedmiNote8T')
 
 
 csvs={}

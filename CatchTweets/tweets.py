@@ -29,9 +29,9 @@ until = "2019-11-20"
 
 for i,val in enumerate(hashtags):
     for tweet in tweepy.Cursor(api.search,
-                            q=val#,
-                            #since=since,
-                            #until=until
+                            q=val,
+                            since=since,
+                            until=until
                             #lang="en"
                             ).items():
         csvWriters[val].writerow([ tweet.user.screen_name, tweet.text,tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location])
