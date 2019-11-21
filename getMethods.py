@@ -1,6 +1,8 @@
 import pandas as pd
 from collections import Counter
 import csv
+import json
+import tweepy
 
 
 hashtags=[]
@@ -28,13 +30,30 @@ summary={}
 texts={}
 sizes={}
 words={}
+csvc = {}
+csvWritersC={}
+
+def getApi():
+    # Load credentials from json file
+    with open("CatchTweets/twitter_credentials.json", "r") as file:
+        creds = json.load(file)
+    auth = tweepy.OAuthHandler(creds['CONSUMER_KEY'], creds['CONSUMER_SECRET'])
+    auth.set_access_token(creds['ACCESS_TOKEN'], creds['ACCESS_SECRET'])
+    api = tweepy.API(auth,wait_on_rate_limit=True)
+    return api
+
 
 def getHashtags():
     return hashtags
 
 def getCsvFile():
     for i,val in enumerate(hashtags):
-        csvs[val] = open('CSV/'+val+'.csv', 'a', encoding="UTF-8")
+        csvs[val] = open('CSVwithDuplicate/'+val+'.csv', 'a', encoding="UTF-8")
+    return csvs
+
+def getCsvCount():
+    for i,val in enumerate(hashtags):
+        csvc[val] = open('CountFollowers/'+val+'.csv', 'a', encoding="UTF-8")
     return csvs
 
 def getWriters():
@@ -42,12 +61,16 @@ def getWriters():
         csvWriters[val] = csv.writer(csvs[val])
     return csvWriters
 
+def getWritersCount():
+    for i,val in enumerate(hashtags):
+        csvWritersC[val] = csv.writer(csvc[val])
+    return csvWritersC
 
 
 
 def getTweets():
     for i,val in enumerate(hashtags):
-        tweets[val] = pd.read_csv('CSV1/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+        tweets[val] = pd.read_csv('CSVwithoutDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     return tweets
 
 
@@ -82,7 +105,7 @@ def getWords(tweets,RE_stopwords):
 def checkDates():
     for i,val in enumerate(hashtags):
         print(val)
-        PD = pd.read_csv('CSV1/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+        PD = pd.read_csv('CSVwithoutDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
         PD.sort_values(by='date', inplace=True, ascending=False)
         print(PD["date"])
         print("----------------")

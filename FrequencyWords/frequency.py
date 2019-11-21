@@ -3,16 +3,16 @@ import pandas as pd
 import nltk
 import re
 import getMethods
+import csv
+import tweepy
+import json
 
 hashtags = getMethods.getHashtags()
 
 tweets = getMethods.getTweets()
 
-
-
 words =  {}
 wordsRT = {}
-dizionario = {}
 for i,val in enumerate(hashtags):
     x = []
     for t in tweets[val]["text"]:
@@ -22,26 +22,15 @@ for i,val in enumerate(hashtags):
     wow = getMethods.getRslt(x)
     wordsRT[val] = wow
 
+api = getMethods.getApi()
 
-for i,val in enumerate(hashtags):
-    x = []
-    for t in tweets[val]["text"]:
-        for i in t.split():
-            if i.startswith('@') and not i.endswith(':'):
-                x.append(i)
-    wow = getMethods.getRslt(x)
-    words[val] = wow
+csvc = getMethods.getCsvCount()
+csvWriterC = getMethods.getWritersCount()
 
-
-print("Generale")
-for key,value in words.items():
-    print("\n")
-    print(key)
-    print(value.head(5))
-print("\n\n")
-
-print("RT")
 for key,value in wordsRT.items():
-    print("\n")
-    print(key)
-    print(value.head(5))
+    data = value.head()
+    for i in data.index:
+        i = i[:-1]
+        if i!="@Concours__FR":
+            user = api.get_user(i)
+            csvWriterC[key].writerow([user.screen_name, user.followers_count])
