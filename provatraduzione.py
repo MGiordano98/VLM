@@ -10,7 +10,7 @@ tweets = getMethods.getTweets()
 influencer = getMethods.getInfluencer()
 
 
-x = tweets["#StarWarsJediFallenOrder"].loc[(tweets["#StarWarsJediFallenOrder"]['date'].str.contains("2019-11-13"))]
+x = tweets["#realme5pro"].loc[(tweets["#realme5pro"]['date'].str.contains("2019-11-19"))]
 
 asd=[]
 for t in x["text"]:
@@ -25,10 +25,10 @@ colpevole = colpevole[1:]
 print(colpevole)
 
 print("\n")
-yyy = tweets["#StarWarsJediFallenOrder"].loc[(tweets["#StarWarsJediFallenOrder"]['screen_name'] == colpevole)] #& tweets["#FootballManager2020"]['date'].str.contains("2019-11-17")]
+yyy = tweets["#realme5pro"].loc[(tweets["#realme5pro"]['screen_name'] == colpevole)] #& tweets["#FootballManager2020"]['date'].str.contains("2019-11-17")]
 print(yyy["text"])
 
 print("\n")
-influenzer = influencer["#StarWarsJediFallenOrder"].loc[(influencer["#StarWarsJediFallenOrder"]['screen_name'] == colpevole)] #& tweets["#FootballManager2020"]['date'].str.contains("2019-11-17")]
+influenzer = influencer["#realme5pro"].loc[(influencer["#realme5pro"]['screen_name'] == colpevole)] #& tweets["#FootballManager2020"]['date'].str.contains("2019-11-17")]
 influenzer
 

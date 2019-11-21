@@ -8,9 +8,7 @@ import tweepy
 import json
 
 hashtags = getMethods.getHashtags()
-
 tweets = getMethods.getTweets()
-
 words =  {}
 wordsRT = {}
 for i,val in enumerate(hashtags):
@@ -21,15 +19,8 @@ for i,val in enumerate(hashtags):
                 x.append(i)
     wow = getMethods.getRslt(x)
     wordsRT[val] = wow
-
-
-
-
-
 api = getMethods.getApi()
-
 csvFileCountFollower = getMethods.getCsvFileFollowers()
-
 for key,value in wordsRT.items():
     data = value.head()
     for i in data.index:

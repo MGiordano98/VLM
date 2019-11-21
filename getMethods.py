@@ -161,10 +161,3 @@ def TopInfluncerByDate(hashtag,date):
     influenzer = influencer[hashtag].loc[(influencer[hashtag]['screen_name'] == colpevole)]
     print(influenzer)
 
-    analyser = SentimentIntensityAnalyzer()
-
-    tweets[hashtags].sort_values(by=['date'])
-    df = tweets[hashtags].reset_index(drop=True)
-    df1 = df.iloc[:, :72]
-    df2 = df.iloc[:, 72:]
-    print(df1)
