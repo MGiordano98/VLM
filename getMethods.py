@@ -11,7 +11,7 @@ hashtags.append('#MiNote10')
 hashtags.append('#realme5pro')
 hashtags.append('#MotoG8Plus')
 
-#hashtags.append('#PokemonSwordShield')
+hashtags.append('#PokemonSwordShield')
 
 hashtags.append('#StarWarsJediFallenOrder')
 hashtags.append('#DeathStrading')
