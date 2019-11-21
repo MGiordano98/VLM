@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def calculate_counter():
-    df  = pd.read_csv('CSVwithoutDuplicate/#realme5pro.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+    df  = pd.read_csv('CSVwithoutDuplicate/#OPPOReno2.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     df = df.drop_duplicates(subset='text', keep='first')
     df.sort_values('date', inplace=True)
 
@@ -20,12 +20,9 @@ def calculate_counter():
 
     return count
 
-def plott():
-    count=calculate_counter()
-    plt.plot(count.keys(), count.values(), label="realme5pro")
-    plt.xlabel('date')
-    plt.ylabel('numero tweets')
-    plt.legend()
-    plt.show()
-
-plot()
+count=calculate_counter()
+plt.plot(count.keys(), count.values(), label="OPPOReno2")
+plt.xlabel('date')
+plt.ylabel('numero tweets')
+plt.legend()
+plt.show()
