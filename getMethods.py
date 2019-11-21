@@ -3,6 +3,8 @@ from collections import Counter
 import csv
 import json
 import tweepy
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 # Credenziali di twitter
 credentials = {}
@@ -38,6 +40,7 @@ words={}
 csvFileCount = {}
 csvWritersCount={}
 
+influcer = {}
 
 def saveCredentials():
     with open("CatchTweets/twitter_credentials.json", "w") as file:
@@ -45,8 +48,8 @@ def saveCredentials():
 
 def dropDuplicates():
     for i,val in enumerate(hashtags):
-        df = pd.read_csv('CSVwithDuplicate/'+val+'.csv')
-        df.drop_duplicates(inplace=True)
+        df = pd.read_csv('CSVwithDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+        df.drop_duplicates(subset=['screen_name','text'],inplace=True)
         df.to_csv('CSVwithoutDuplicate/'+val+'.csv', index=False)
 
 def getApi():
@@ -87,10 +90,9 @@ def getTweets():
     return tweets
 
 def getInfluencer():
-    x = {}
     for i,val in enumerate(hashtags):
-        x[val] = pd.read_csv('CountFollowers/'+val+'.csv',names=[ 'screen_name', 'followers'])
-    return x
+        influcer[val] = pd.read_csv('CountFollowers/'+val+'.csv',names=[ 'screen_name', 'followers'])
+    return influcer
 
 
 def getRslt(x):
@@ -129,3 +131,46 @@ def checkDates():
         PD.sort_values(by='date', inplace=True, ascending=False)
         print(PD["date"])
         print("----------------")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def TopInfluncerByDate(hashtag,date):     
+    tweets = getTweets()
+    influencer = getInfluencer()
+    x = tweets[hashtag].loc[(tweets[hashtag]['date'].str.contains(date))]
+    asd=[]
+    for t in x["text"]:
+        for i in t.split():
+            if i.startswith('@') and i.endswith(':'):
+                asd.append(i)
+    colpevole = getRslt(asd)
+    colpevole = colpevole.index
+    colpevole = colpevole[0]
+    colpevole = colpevole[:-1]
+    colpevole = colpevole[1:]
+    print(colpevole)
+    print("\n")
+    yyy = tweets[hashtag].loc[(tweets[hashtag]['screen_name'] == colpevole)] 
+    print(yyy)
+    print("\n")
+    influenzer = influencer[hashtag].loc[(influencer[hashtag]['screen_name'] == colpevole)]
+    print(influenzer)
+
+    analyser = SentimentIntensityAnalyzer()
+
+    tweets[hashtags].sort_values(by=['date'])
+    df = tweets[hashtags].reset_index(drop=True)
+    df1 = df.iloc[:, :72]
+    df2 = df.iloc[:, 72:]
+    print(df1)
