@@ -10,6 +10,7 @@ tweets= getMethods.getTweets()
 
 words = []
 
+
 for key,value in tweets.items():
     x = []
     for text in value["text"]:
@@ -22,5 +23,8 @@ for key,value in tweets.items():
 
 
 for i,val in enumerate(hashtags):
+    print("\n")
     print(val)
     print(words[i])
+
+
