@@ -186,7 +186,9 @@ def TopInfluncerByDate(hashtag,date):
     dopo = tweets[hashtag].loc[yyy.index[0]:]
 
     getSentimental(hashtag,prima)
-    getSentimental(hashtag,tweets[hashtag],colpevole)
+    nome = influenzer.iloc[0][0]
+    followers = influenzer.iloc[0][1]
+    getSentimental(hashtag,tweets[hashtag], str(nome)+" "+str(followers))
 
 
 
