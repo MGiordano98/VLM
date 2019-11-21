@@ -11,11 +11,7 @@ tweets = getMethods.getTweets()
 tweets_RT = {}
 tweets_NoRT = {}
 
-for i,val in enumerate(hashtags):
-    tweets[val] = tweets[val].drop_duplicates(subset='text', keep='first')
 
-
-""" 
 for key,value in tweets.items():
     x = []
     y = []
@@ -26,7 +22,7 @@ for key,value in tweets.items():
             y.append(tweets[key]["screen_name"])
     tweets_RT[key] = x
     tweets_NoRT[key] = y
- """
+ 
 
 
 stopwords_it = nltk.corpus.stopwords.words('italian')
@@ -37,11 +33,19 @@ RE_stopwords = r'\b(?:{})\b'.format('|'.join(stopwords))
 
 
 words =  {}
-
+wordsRT = {}
+dizionario = {}
+for key,value in tweets_RT.items():
+    x = []
+    for t in value:
+        y = t.split()
+        x.append(y[1])
+    wow = getMethods.getRslt(x)
+    wordsRT[key] = wow
 
 """ for i,val in enumerate(hashtags):
     x = []
-    for t in tweets_NoRT[val]:
+    for t in tweetsoRT[val]:
         for i in t.split():
             if i.startswith('@'):
                 x.append(i)
@@ -58,17 +62,25 @@ for i,val in enumerate(hashtags):
 
 
 
-
 for i,val in enumerate(hashtags):
     x = []
     for t in tweets[val]["text"]:
         for i in t.split():
-            if i.startswith('@'):
+            if i.startswith('@') and not i.endswith(':'):
                 x.append(i)
     wow = getMethods.getRslt(x)
     words[val] = wow
 
 
-
+print("Generale")
 for key,value in words.items():
+    print("\n")
+    print(key)
+    print(value.head(5))
+print("\n\n")
+
+print("RT")
+for key,value in wordsRT.items():
+    print("\n")
+    print(key)
     print(value.head(5))
