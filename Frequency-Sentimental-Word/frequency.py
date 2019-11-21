@@ -28,10 +28,7 @@ for i,val in enumerate(hashtags):
 
 api = getMethods.getApi()
 
-csvc = getMethods.getCsvFileCount()
-csvWriterC = getMethods.getWritersCount()
-
-
+csvFileCountFollower = getMethods.getCsvFileFollowers()
 
 for key,value in wordsRT.items():
     data = value.head()
@@ -39,4 +36,4 @@ for key,value in wordsRT.items():
         i = i[:-1]
         if i!="@Concours__FR":
             user = api.get_user(i)
-            csvWriterC[key].writerow([user.screen_name, user.followers_count])
+            csvFileCountFollower[key].writerow([user.screen_name, user.followers_count])

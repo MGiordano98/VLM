@@ -13,9 +13,6 @@ hashtags= getMethods.getHashtags()
 #Apro/Creo il file dove devo scrivere i dati
 csvFileWithDuplicate = getMethods.getCsvFileWithDuplicate()
 
-#Use csv Writer
-csvWritersWithDuplicate = getMethods.getWritersWithDuplicate()
-
 since = "2019-11-21"
 until = "2019-11-22"
 #Se voglio prendere i tweet di un giorno, esempio del 2019-11-16, devo mettere since="2019-11-16" e until del giorno dopo quindi="2019-11-17"
@@ -28,7 +25,7 @@ for i,val in enumerate(hashtags):
                             since=since,
                             until=until
                             ).items():
-        csvWritersWithDuplicate[val].writerow([ tweet.user.screen_name, tweet.text,tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location])
+        csvFileWithDuplicate[val].writerow([ tweet.user.screen_name, tweet.text,tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location])
 
 
 

@@ -28,19 +28,16 @@ hashtags.append('#OPPOReno2')
 hashtags.append('#RedmiNote8T')
 #hashtags.append('#PokemonSwordShield')
 
-csvFileWithDuplicate={}
-csvWritersWithDuplicate={}
 
-tweets={}
+
 summary={}
 texts={}
 sizes={}
 words={}
 
-csvFileCount = {}
-csvWritersCount={}
 
-influcer = {}
+
+
 
 def saveCredentials():
     with open("CatchTweets/twitter_credentials.json", "w") as file:
@@ -65,31 +62,29 @@ def getHashtags():
     return hashtags
 
 def getCsvFileWithDuplicate():
+    csvFileWithDuplicate={}
+    csvWritersWithDuplicate={}
     for i,val in enumerate(hashtags):
         csvFileWithDuplicate[val] = open('CSVwithDuplicate/'+val+'.csv', 'a', encoding="UTF-8")
-    return csvFileWithDuplicate
-
-def getWritersWithDuplicate():
-    for i,val in enumerate(hashtags):
         csvWritersWithDuplicate[val] = csv.writer(csvFileWithDuplicate[val])
     return csvWritersWithDuplicate
 
-def getCsvFileCount():
+def getCsvFileFollowers():
+    csvFileCount = {}
+    csvWritersCount={}
     for i,val in enumerate(hashtags):
         csvFileCount[val] = open('CountFollowers/'+val+'.csv', 'w', encoding="UTF-8")
-    return csvFileCount
-
-def getWritersCount():
-    for i,val in enumerate(hashtags):
         csvWritersCount[val] = csv.writer(csvFileCount[val])
     return csvWritersCount
 
 def getTweets():
+    tweets={}
     for i,val in enumerate(hashtags):
         tweets[val] = pd.read_csv('CSVwithoutDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     return tweets
 
 def getInfluencer():
+    influcer = {}
     for i,val in enumerate(hashtags):
         influcer[val] = pd.read_csv('CountFollowers/'+val+'.csv',names=[ 'screen_name', 'followers'])
     return influcer
