@@ -6,15 +6,12 @@ import getMethods
 
 hashtags = getMethods.getHashtags()
 
-tweets = getMethods.getTweets()
+tweets= getMethods.getTweets()
 
-tweets_RT = {}
-tweets_NoRT = {}
-
+words = []
 
 for key,value in tweets.items():
     x = []
-    y = []
     for text in value["text"]:
         if 'RT @' in text:
             x.append(text)
@@ -50,11 +47,7 @@ for key,value in tweets_RT.items():
             if i.startswith('@'):
                 x.append(i)
     wow = getMethods.getRslt(x)
-    words[val] = wow """
-""" 
-print(tweets_NoRT)
-for key,value in enumerate(tweets_NoRT[val]):
-    print(key)
+    words.append(wow)
 
 
 for i,val in enumerate(hashtags):

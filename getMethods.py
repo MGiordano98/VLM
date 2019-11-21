@@ -4,19 +4,22 @@ import csv
 
 
 hashtags=[]
-hashtags.append("#NutellaBisciuts")
-hashtags.append("#ABH")
+hashtags.append("#NutellaBiscuits")
+hashtags.append("#ABH") 
 hashtags.append('#HuaweiMateX')
 hashtags.append('#MiNote10')
 hashtags.append('#realme5pro')
 hashtags.append('#MotoG8Plus')
-hashtags.append('#PokemonSwordShield')
+
+#hashtags.append('#PokemonSwordShield')
+
 hashtags.append('#StarWarsJediFallenOrder')
 hashtags.append('#DeathStrading')
 hashtags.append('#FootballManager2020')
 hashtags.append('#DragonBallZKakarot')
 hashtags.append('#OPPOReno2')
 hashtags.append('#RedmiNote8T')
+
 
 csvs={}
 csvWriters={}
@@ -44,7 +47,7 @@ def getWriters():
 
 def getTweets():
     for i,val in enumerate(hashtags):
-        tweets[val] = pd.read_csv('CSV/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+        tweets[val] = pd.read_csv('CSV1/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     return tweets
 
 
@@ -55,11 +58,6 @@ def getSummary():
     for i,val in enumerate(hashtags):
         summary[val] = {"positive":0,"neutral":0,"negative":0}
     return summary
-
-def getOnlyText(tweets):
-    for i,val in enumerate(hashtags):
-        texts[val] = tweets[val]["text"]
-    return texts
 
 def getSizes(summary):
     for i,val in enumerate(hashtags):
@@ -79,3 +77,12 @@ def getWords(tweets,RE_stopwords):
            .split()
             )
     return words
+
+
+def checkDates():
+    for i,val in enumerate(hashtags):
+        print(val)
+        PD = pd.read_csv('CSV1/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
+        PD.sort_values(by='date', inplace=True, ascending=False)
+        print(PD["date"])
+        print("----------------")
