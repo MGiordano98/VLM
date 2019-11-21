@@ -24,7 +24,7 @@ for hashtag in hashtags:
     for key in count.keys():
         keys.append(key.split("-")[2])
 
-    plt.plot(keys, count.values(), label=hashtag)
+    plt.plot(keys, count.values(), color=np.random.rand(3,), label=hashtag)
     plt.xlabel('date')
     plt.ylabel('numero tweets')
     plt.legend()
