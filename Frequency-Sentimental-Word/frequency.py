@@ -22,10 +22,16 @@ for i,val in enumerate(hashtags):
     wow = getMethods.getRslt(x)
     wordsRT[val] = wow
 
+
+
+
+
 api = getMethods.getApi()
 
-csvc = getMethods.getCsvCount()
+csvc = getMethods.getCsvFileCount()
 csvWriterC = getMethods.getWritersCount()
+
+
 
 for key,value in wordsRT.items():
     data = value.head()
