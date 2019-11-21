@@ -4,6 +4,12 @@ import csv
 import json
 import tweepy
 
+# Credenziali di twitter
+credentials = {}
+credentials['CONSUMER_KEY'] = "M9aE9ycbpxFjHMkseJuSoLak7"
+credentials['CONSUMER_SECRET'] = "UG0remo4I17nxUCeurEzdCCTShBaFAdffTzuf0xzY1goAbuimK"
+credentials['ACCESS_TOKEN'] = "1192747749990653952-QSj54RyuMzxnmbOZE1Dddyri3pqIbm"
+credentials['ACCESS_SECRET'] = "jVVxur00vqllJbWW29oQTrTbkHN6TYaScQx626Cppz4zy"
 
 hashtags=[]
 hashtags.append("#NutellaBiscuits")
@@ -12,26 +18,36 @@ hashtags.append('#HuaweiMateX')
 hashtags.append('#MiNote10')
 hashtags.append('#realme5pro')
 hashtags.append('#MotoG8Plus')
-
-hashtags.append('#PokemonSwordShield')
-
 hashtags.append('#StarWarsJediFallenOrder')
 hashtags.append('#DeathStrading')
 hashtags.append('#FootballManager2020')
 hashtags.append('#DragonBallZKakarot')
 hashtags.append('#OPPOReno2')
 hashtags.append('#RedmiNote8T')
+#hashtags.append('#PokemonSwordShield')
 
+csvFileWithDuplicate={}
+csvWritersWithDuplicate={}
 
-csvs={}
-csvWriters={}
 tweets={}
 summary={}
 texts={}
 sizes={}
 words={}
-csvc = {}
-csvWritersC={}
+
+csvFileCount = {}
+csvWritersCount={}
+
+
+def saveCredentials():
+    with open("CatchTweets/twitter_credentials.json", "w") as file:
+        json.dump(credentials, file)
+
+def dropDuplicates():
+    for i,val in enumerate(hashtags):
+        df = pd.read_csv('CSVwithDuplicate/'+val+'.csv')
+        df.drop_duplicates(inplace=True)
+        df.to_csv('CSVwithoutDuplicate/'+val+'.csv', index=False)
 
 def getApi():
     # Load credentials from json file
@@ -42,40 +58,44 @@ def getApi():
     api = tweepy.API(auth,wait_on_rate_limit=True)
     return api
 
-
 def getHashtags():
     return hashtags
 
-def getCsvFile():
+def getCsvFileWithDuplicate():
     for i,val in enumerate(hashtags):
-        csvs[val] = open('CSVwithDuplicate/'+val+'.csv', 'a', encoding="UTF-8")
-    return csvs
+        csvFileWithDuplicate[val] = open('CSVwithDuplicate/'+val+'.csv', 'a', encoding="UTF-8")
+    return csvFileWithDuplicate
 
-def getCsvCount():
+def getWritersWithDuplicate():
     for i,val in enumerate(hashtags):
-        csvc[val] = open('CountFollowers/'+val+'.csv', 'a', encoding="UTF-8")
-    return csvs
+        csvWritersWithDuplicate[val] = csv.writer(csvFileWithDuplicate[val])
+    return csvWritersWithDuplicate
 
-def getWriters():
+def getCsvFileCount():
     for i,val in enumerate(hashtags):
-        csvWriters[val] = csv.writer(csvs[val])
-    return csvWriters
+        csvFileCount[val] = open('CountFollowers/'+val+'.csv', 'w', encoding="UTF-8")
+    return csvFileCount
 
 def getWritersCount():
     for i,val in enumerate(hashtags):
-        csvWritersC[val] = csv.writer(csvc[val])
-    return csvWritersC
-
-
+        csvWritersCount[val] = csv.writer(csvFileCount[val])
+    return csvWritersCount
 
 def getTweets():
     for i,val in enumerate(hashtags):
         tweets[val] = pd.read_csv('CSVwithoutDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     return tweets
 
+def getInfluencer():
+    x = {}
+    for i,val in enumerate(hashtags):
+        x[val] = pd.read_csv('CountFollowers/'+val+'.csv',names=[ 'screen_name', 'followers'])
+    return x
+
 
 def getRslt(x):
     return pd.DataFrame(Counter(x).most_common(10),columns=['Word', 'Frequency']).set_index('Word')
+
 
 def getSummary():
     for i,val in enumerate(hashtags):
