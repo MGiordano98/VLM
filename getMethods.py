@@ -89,7 +89,6 @@ def getInfluencer():
         influcer[val] = pd.read_csv('CountFollowers/'+val+'.csv',names=[ 'screen_name', 'followers'])
     return influcer
 
-
 def getRslt(x):
     return pd.DataFrame(Counter(x).most_common(10),columns=['Word', 'Frequency']).set_index('Word')
 
