@@ -38,7 +38,7 @@ for key,value in words.items():
     print("\n")
     print(key)
     print(value.head(5))
-print("\n\n")
+print("\n\n") 
 
 print("RT")
 for key,value in wordsRT.items():

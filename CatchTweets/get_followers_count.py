@@ -26,7 +26,7 @@ print(followers) """
 count={}
 follower=[]
 for user in tweepy.Cursor(api.followers, screen_name="Nutella_Italia").items():
-    print('follower :'+ user.screen_name)
     follower.append(user.screen_name)
+    print(user)
 
 print(len(follower))
