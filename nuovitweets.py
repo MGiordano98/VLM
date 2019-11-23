@@ -6,6 +6,7 @@ import tweepy
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
 
+until = "2019-11-23"
 
 with open("CatchTweets/twitter_credentials.json", "r") as file:
     creds = json.load(file)
@@ -14,8 +15,14 @@ auth.set_access_token(creds['ACCESS_TOKEN'], creds['ACCESS_SECRET'])
 api = tweepy.API(auth,wait_on_rate_limit=True)
 
 hashtags=[]
-hashtags.append('#')
-hashtags.append("#")
+hashtags.append("#Puma") #November 22, 2019
+#Halo Reach - December 3 (Xbox One)
+#LiS 2: Episode 5 - December 3
+#SaGa: Scarlet Grace - December 3
+#Terminator: Resistance - December 5
+#Assassins Creed: The Rebel Collection(Nintendo Switch) - December 6
+#Ashen (PS4 and Switch) - December 9
+#Narcos: Rise of the Cartels - December 10
 
 csvFileWithDuplicate={}
 csvWritersWithDuplicate={}
@@ -26,7 +33,7 @@ for i,val in enumerate(hashtags):
 for i,val in enumerate(hashtags):
     for tweet in tweepy.Cursor(api.search,
                             q=val,
-                            until="2019-11-22"
+                            until=until
                             ).items():
         csvWritersWithDuplicate[val].writerow([ tweet.user.screen_name, tweet.text,tweet.created_at, tweet.favorite_count, tweet.retweet_count, tweet.user.location])
 
