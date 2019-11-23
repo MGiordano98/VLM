@@ -16,19 +16,24 @@ credentials['ACCESS_SECRET'] = "jVVxur00vqllJbWW29oQTrTbkHN6TYaScQx626Cppz4zy"
 hashtags=[]
 hashtags.append("#NutellaBiscuits")
 hashtags.append("#ABH") 
-hashtags.append('#HuaweiMateX')
-hashtags.append('#MiNote10')
-hashtags.append('#realme5pro')
-hashtags.append('#MotoG8Plus')
-hashtags.append('#StarWarsJediFallenOrder')
-hashtags.append('#DeathStrading')
-hashtags.append('#FootballManager2020')
-hashtags.append('#DragonBallZKakarot')
-hashtags.append('#OPPOReno2')
-hashtags.append('#RedmiNote8T')
+hashtags.append('#HuaweiMateX') #15 novembre 2019
+hashtags.append('#MiNote10') #25 dicembre 2019
+hashtags.append('#realme5pro') #20th August 2019
+hashtags.append('#MotoG8Plus') #October 25 2019
+hashtags.append('#StarWarsJediFallenOrder') #November 15, 2019
+hashtags.append('#DeathStrading') #November 8, 2019
+hashtags.append('#FootballManager2020') #18 November 2019
+hashtags.append('#DragonBallZKakarot') #16 gennaio 2019
+hashtags.append('#OPPOReno2') #September 20 2019
+hashtags.append('#RedmiNote8T') #6th November 2019
 #hashtags.append('#PokemonSwordShield')
-hashtags.append('#ShenmueIII')
-hashtags.append("#SGWContracts")
+hashtags.append('#ShenmueIII') #19 novembre 2019
+hashtags.append("#SGWContracts") #November 22, 2019
+
+hashtags.append('#Jordan') #November 23, 2019
+hashtags.append("#adidas") #November 23, 2019
+hashtags.append("#AIRFORCE1") #November 22, 2019
+hashtags.append("#Puma") #November 22, 2019
 
 analyser = SentimentIntensityAnalyzer()
 

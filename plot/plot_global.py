@@ -24,8 +24,8 @@ for hashtag in hashtags:
 
     tutto = Counter(keys)
     lists = sorted(tutto.items())
-    print(hashtag)
-    print(lists)
+    #print(hashtag)
+    #print(lists)
     x, y = zip(*lists)
     plt.plot(x, y, color=np.random.rand(3,), label=hashtag)
     plt.xticks(rotation=90)
