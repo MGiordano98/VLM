@@ -4,8 +4,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
+import getMethods
 
-hashtags=["#ABH", "#HuaweiMateX", "#MiNote10", "#MotoG8Plus", "#NutellaBiscuits", "#realme5pro", "#OPPOReno2", "#StarWarsJediFallenOrder", "#RedmiNote8T", "#FootballManager2020", "#DragonBallZKakarot", "#DeathStrading"]
+hashtags= getMethods.getHashtags()
 
 for hashtag in hashtags:
     df  = pd.read_csv('CSVwithoutDuplicate/'+hashtag+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
@@ -22,8 +23,9 @@ for hashtag in hashtags:
             keys.append(anno+"-"+mese+"-"+giorno[0])
 
     tutto = Counter(keys)
-
     lists = sorted(tutto.items())
+    print(hashtag)
+    print(lists)
     x, y = zip(*lists)
     plt.plot(x, y, color=np.random.rand(3,), label=hashtag)
     plt.xticks(rotation=90)

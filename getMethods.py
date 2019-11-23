@@ -27,6 +27,8 @@ hashtags.append('#DragonBallZKakarot')
 hashtags.append('#OPPOReno2')
 hashtags.append('#RedmiNote8T')
 #hashtags.append('#PokemonSwordShield')
+hashtags.append('#ShenmueIII')
+hashtags.append("#SGWContracts")
 
 analyser = SentimentIntensityAnalyzer()
 
