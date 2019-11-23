@@ -34,6 +34,13 @@ hashtags.append('#Jordan') #November 23, 2019
 hashtags.append("#adidas") #November 23, 2019
 hashtags.append("#AIRFORCE1") #November 22, 2019
 hashtags.append("#Puma") #November 22, 2019
+hashtags.append('#nike') #November 22-23, 2019
+
+hashtags.append('#HaloReach') #Halo Reach - December 3 (Xbox One)
+hashtags.append("#LifeisStrange2") #LiS 2: Episode 5 - December 3
+hashtags.append("#TerminatorResistance") #Terminator: Resistance - December 5
+hashtags.append("#Ashen") #Ashen (PS4 and Switch) - December 9
+hashtags.append("#Narcos") #Narcos: Rise of the Cartels - December 10
 
 analyser = SentimentIntensityAnalyzer()
 
