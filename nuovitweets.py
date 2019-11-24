@@ -5,6 +5,7 @@ import json
 import tweepy
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+import getMethods
 
 until = "2019-11-23"
 
@@ -14,14 +15,9 @@ auth = tweepy.OAuthHandler(creds['CONSUMER_KEY'], creds['CONSUMER_SECRET'])
 auth.set_access_token(creds['ACCESS_TOKEN'], creds['ACCESS_SECRET'])
 api = tweepy.API(auth,wait_on_rate_limit=True)
 
-hashtags=[]
-hashtags.append('#nike') #November 22-23, 2019
-hashtags.append('#HaloReach') #Halo Reach - December 3 (Xbox One)
-hashtags.append("#LifeisStrange2") #LiS 2: Episode 5 - December 3
-hashtags.append("#TerminatorResistance") #Terminator: Resistance - December 5
-hashtags.append("#Ashen") #Ashen (PS4 and Switch) - December 9
-hashtags.append("#Narcos") #Narcos: Rise of the Cartels - December 10
+hashtags= getMethods.getHashtags()
 
+""" 
 csvFileWithDuplicate={}
 csvWritersWithDuplicate={}
 for i,val in enumerate(hashtags):
@@ -39,6 +35,7 @@ for i,val in enumerate(hashtags):
     df = pd.read_csv('CSVwithDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     df.drop_duplicates(subset=['screen_name','text'],inplace=True)
     df.to_csv('CSVwithoutDuplicate/'+val+'.csv', index=False)
+ """
 
 tweets={}
 for i,val in enumerate(hashtags):
@@ -65,8 +62,11 @@ for key,value in wordsRT.items():
     data = value.head()
     for i in data.index:
         i = i[:-1]
-        user = api.get_user(i)
-        print(key)
-        print(user.screen_name)
-        print(user.followers_count)
-        csvWritersCount[key].writerow([user.screen_name, user.followers_count])
+        print(i)
+        if i!="@Concours__FR":
+            user = api.get_user(i)
+            print(key)
+            print(user.screen_name)
+            print(user.followers_count)
+            csvWritersCount[key].writerow([user.screen_name, user.followers_count])
+            csvFileCount[key].flush()
