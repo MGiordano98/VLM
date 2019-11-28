@@ -5,6 +5,7 @@ import json
 import tweepy
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+from googletrans import Translator
 
 # Credenziali di twitter
 credentials = {}
@@ -65,6 +66,7 @@ def CatchTweet(since,until):
         csvWritersWithDuplicate[val] = csv.writer(csvFileWithDuplicate[val])
 
     for i,val in enumerate(hashtags):
+        print(val)
         for tweet in tweepy.Cursor(api.search,
                                 q=val,
                                 since=since,
@@ -77,7 +79,7 @@ def CatchTweet(since,until):
         df.drop_duplicates(subset=['screen_name','text'],inplace=True)
         df.to_csv('CSVwithoutDuplicate/'+val+'.csv', index=False)
 
-    tweets={}
+"""     tweets={}
     for i,val in enumerate(hashtags):
         tweets[val] = pd.read_csv('CSVwithoutDuplicate/'+val+'.csv',names=[ 'screen_name','text','date', 'favorite_count', 'retweet_count', 'location'])
     
@@ -105,7 +107,7 @@ def CatchTweet(since,until):
             if i!="@Concours__FR":
                 user = api.get_user(i)
                 csvWritersCount[key].writerow([user.screen_name, user.followers_count])
-
+ """
 
 def saveCredentials():
     with open("CatchTweets/twitter_credentials.json", "w") as file:
@@ -174,35 +176,54 @@ def checkDates():
 
 def TopInfluncerByDate(hashtag,date):     
     tweets = getTweets()
-    influencer = getInfluencer()
+
     tweets[hashtag].sort_values('date', inplace=True)
-    x = tweets[hashtag].loc[(tweets[hashtag]['date'].str.contains(date))]
-    asd=[]
+
+    giornocorrente = date+" 23:59:59"
+    anno,mese,giorno = date.split("-")
+    giornoprima = anno+"-"+mese+"-"+str(int(giorno)-1)+" 00:00:01"
+
+    mask = (tweets[hashtag]['date'] > giornoprima) & (tweets[hashtag]['date'] <= giornocorrente)
+    x = tweets[hashtag].loc[mask]
+    influenzers=[]
     for t in x["text"]:
         for i in t.split():
             if i.startswith('@') and i.endswith(':'):
-                asd.append(i)
-    colpevole = pd.DataFrame(Counter(asd).most_common(10),columns=['Word', 'Frequency']).set_index('Word')
-    colpevole = colpevole.index
-    colpevole = colpevole[0]
-    colpevole = colpevole[:-1]
-    colpevole = colpevole[1:]
-    print(colpevole)
-    print("\n")
-    yyy = tweets[hashtag].loc[(tweets[hashtag]['screen_name'] == colpevole)] 
-    print(yyy)
-    print("\n")
-    influenzer = influencer[hashtag].loc[(influencer[hashtag]['screen_name'] == colpevole)]
-    print(influenzer)
+                influenzers.append(i)
+    influenzer = pd.DataFrame(Counter(influenzers).most_common(10),columns=['Word', 'Frequency']).set_index('Word')
+    influenzerTR = influenzer['Frequency'][0]
+    influenzer = influenzer.index
+    influenzer = influenzer[0]
+    influenzer = influenzer[:-1]
+    influenzer = influenzer[1:]
+    print("Nome dell'influenzer, del giorno:"+date+", e' "+influenzer+"\n")
+    print("Su "+str(len(x))+" tweets lui/lei è stata retweettata ben "+str(influenzerTR))
 
-    print(yyy.index[0])
-    prima = tweets[hashtag].loc[:yyy.index[0]]
-    dopo = tweets[hashtag].loc[yyy.index[0]:]
+    tweet = tweets[hashtag].loc[(tweets[hashtag]['screen_name'] == influenzer)] 
+    tweet.head()
+    print("Testo = "+tweet["text"])
+    print("Data = "+tweet["date"])
+    translator = Translator()
+    #translation = translator.translate(str(tweet["text"]), dest='it')
+    #print(translation.text)
+
+    print("\n")
+    with open("CatchTweets/twitter_credentials.json", "r") as file:
+        creds = json.load(file)
+    auth = tweepy.OAuthHandler(creds['CONSUMER_KEY'], creds['CONSUMER_SECRET'])
+    auth.set_access_token(creds['ACCESS_TOKEN'], creds['ACCESS_SECRET'])
+    api = tweepy.API(auth,wait_on_rate_limit=True)
+    user = api.get_user("@"+influenzer)
+    print("I followers dell'influenzer sono = "+str(user.followers_count))
+
+    giornodopo = anno+"-"+mese+"-"+str(int(giorno)+1)+" 23:59:59"
+    prima = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 00:00:00"]
+    durante = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 23:59:59"]
+    dopo = tweets[hashtag][tweets[hashtag]['date'] <= giornodopo]
 
     getSentimental(hashtag,prima)
-    nome = influenzer.iloc[0][0]
-    followers = influenzer.iloc[0][1]
-    getSentimental(hashtag,tweets[hashtag], str(nome)+" "+str(followers))
+    getSentimental(hashtag,durante)
+    getSentimental(hashtag,dopo)
 
 
 
@@ -228,7 +249,7 @@ def getSentimental(hashtag,tweets,colpevole=""):
             summary[hashtag]["positive"] +=1
         else:
             summary[hashtag]["negative"] +=1
-    tweets.sort_index(by='date', inplace=True, ascending=True)
+    tweets.sort_values(by='date', inplace=True, ascending=True)
     df = tweets.reset_index(drop=True)
     dates[hashtag] = "Start ="+df["date"][0] + "   to ="+df["date"][len(df["date"])-2]
 
