@@ -220,7 +220,8 @@ def TopInfluncerByDate(hashtag,date):
     prima = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 00:00:00"]
     durante = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 23:59:59"]
     dopo = tweets[hashtag][tweets[hashtag]['date'] <= giornodopo]
-
+ 
+    getSentimental(hashtag,tweet,influenzer)
     getSentimental(hashtag,prima)
     getSentimental(hashtag,durante)
     getSentimental(hashtag,dopo)
@@ -265,6 +266,6 @@ def getSentimental(hashtag,tweets,colpevole=""):
     if colpevole=="":
         plt.title(hashtag + "\n  " + dates[hashtag])
     else:
-        plt.title(hashtag + "\n  " + dates[hashtag] + "\nColpevole : "+colpevole)
+        plt.title(hashtag + "\n  "  + "\nColpevole : "+colpevole)
     plt.legend(sizes[hashtag])
     plt.show()
