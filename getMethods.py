@@ -182,6 +182,7 @@ def TopInfluncerByDate(hashtag,date):
     giornocorrente = date+" 23:59:59"
     anno,mese,giorno = date.split("-")
     giornoprima = anno+"-"+mese+"-"+str(int(giorno)-1)+" 00:00:01"
+    giornodopo = anno+"-"+mese+"-"+str(int(giorno)+1)+" 23:59:59"
 
     mask = (tweets[hashtag]['date'] > giornoprima) & (tweets[hashtag]['date'] <= giornocorrente)
     x = tweets[hashtag].loc[mask]
@@ -200,7 +201,9 @@ def TopInfluncerByDate(hashtag,date):
     print("Su "+str(len(x))+" tweets lui/lei è stata retweettata ben "+str(influenzerTR))
 
     tweet = tweets[hashtag].loc[(tweets[hashtag]['screen_name'] == influenzer)] 
-    tweet.head()
+    tweet = tweet.loc[(tweet['date'] < giornocorrente)]
+    tweet = tweet.loc[(tweet['date'] > giornoprima)]
+
     print("Testo = "+tweet["text"])
     print("Data = "+tweet["date"])
     translator = Translator()
@@ -216,7 +219,6 @@ def TopInfluncerByDate(hashtag,date):
     user = api.get_user("@"+influenzer)
     print("I followers dell'influenzer sono = "+str(user.followers_count))
 
-    giornodopo = anno+"-"+mese+"-"+str(int(giorno)+1)+" 23:59:59"
     prima = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 00:00:00"]
     durante = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 23:59:59"]
     dopo = tweets[hashtag][tweets[hashtag]['date'] <= giornodopo]
