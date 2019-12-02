@@ -220,7 +220,6 @@ def TopInfluncerByDate(hashtag,date):
     prima = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 00:00:00"]
     durante = tweets[hashtag].loc[tweets[hashtag]['date'] <= date+" 23:59:59"]
     dopo = tweets[hashtag][tweets[hashtag]['date'] <= giornodopo]
- 
     getSentimental(hashtag,tweet,influenzer)
     getSentimental(hashtag,prima)
     getSentimental(hashtag,durante)
@@ -250,9 +249,12 @@ def getSentimental(hashtag,tweets,colpevole=""):
             summary[hashtag]["positive"] +=1
         else:
             summary[hashtag]["negative"] +=1
+    
     tweets.sort_values(by='date', inplace=True, ascending=True)
-    df = tweets.reset_index(drop=True)
-    dates[hashtag] = "Start ="+df["date"][0] + "   to ="+df["date"][len(df["date"])-2]
+    
+    if colpevole=="":
+        df = tweets.reset_index(drop=True)
+        dates[hashtag] = "Start ="+df["date"][0] + "   to ="+df["date"][len(df["date"])-2]
 
     labels = ['Positive', 'Neutral', 'Negative']
     colors = ['yellowgreen','gold','lightcoral']

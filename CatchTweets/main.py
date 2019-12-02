@@ -6,8 +6,8 @@ import json
 import getMethods
 
 
-since = "2019-11-29"
-until = "2019-12-01"
+since = "2019-12-01"
+until = "2019-12-02"
 
 getMethods.CatchTweet(since,until)
 
